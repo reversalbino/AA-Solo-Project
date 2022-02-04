@@ -16,13 +16,8 @@ if (process.env.NODE_ENV === 'production') {
   enhancer = composeEnhancers(applyMiddleware(thunk, logger));
 }
 
-// function configureStore(preloadedState) {
-//   return createStore(rootReducer, preloadedState, enhancer);
-// }
-
-const configureStore = (preloadedState) => {
+function configureStore(preloadedState) {
   return createStore(rootReducer, preloadedState, enhancer);
-};
-
+}
 
 export default configureStore;
