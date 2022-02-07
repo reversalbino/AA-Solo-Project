@@ -29,5 +29,5 @@ npx sequelize db:seed:all
 ```
 npm start
 ```
-9. Navigate to the frontend directory and run the same command. This should open the browser and direct you to the project. If not, navigate to http://localhost:5000, replacing the "5000" with the port used in your backend .env file
+9. Navigate to the frontend directory and run the same command. This should open the browser and direct you to the project. If not, navigate to http://localhost:5000, replacing the "5000" with the port used in your backend .env file if necessary
 10. Congrats!! You can now create user accounts or user the demo user to browse Noise-Storm
