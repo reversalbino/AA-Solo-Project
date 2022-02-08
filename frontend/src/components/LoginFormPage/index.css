@@ -1,3 +1,78 @@
 * {
     color: black;
+    background-color: transparent;
+}
+
+.login-form {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 200px auto;
+}
+
+form {
+    border: 2px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 20%;
+    margin: auto;
+    height: 20rem;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    justify-content: center;
+}
+
+.signup-login-buttons {
+    width: 70%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin: auto;
+}
+
+.signup-login-button {
+    width: 90%;
+}
+
+#user-logo, #key-logo {
+    padding: 5px;
+    font-size: 17px;
+}
+
+input {
+    margin: auto;
+    height: 40px;
+    border: none;
+    font-size: 16px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.input {
+    border: 2px solid lightgray;
+    border-radius: 3px;
+    width: 70%;
+    margin: auto;
+}
+
+#register {
+    color: rgb(65, 134, 219);
+    text-decoration: none;
+}
+
+#login-button {
+    padding: 10px;
+    width: 30%;
+    margin: auto;
+    background-color: orangered;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+
+.signup-message {
+    text-align: center;
 }
