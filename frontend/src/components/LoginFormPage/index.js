@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import './index.css';
 
@@ -36,7 +36,7 @@ function LoginFormPage() {
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
                 <label className='input'>
-                    <i class="fas fa-user" id='user-logo'></i>
+                    <i className="fas fa-user" id='user-logo'></i>
                     <input
                         type="text"
                         value={credential}
@@ -46,7 +46,7 @@ function LoginFormPage() {
                     />
                 </label>
                 <label className='input'>
-                    <i class="fas fa-key" id='key-logo'></i>
+                    <i className="fas fa-key" id='key-logo'></i>
                     <input
                         type="password"
                         value={password}

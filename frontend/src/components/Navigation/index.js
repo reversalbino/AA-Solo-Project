@@ -29,6 +29,8 @@ function Navigation({ isLoaded }) {
       <li className='nav'>
         <NavLink exact to="/" id='title'>Noise-Storm</NavLink>
         <div className='links'>
+          <NavLink exact to="/songs/1" id='title'>Test Song</NavLink>
+          <NavLink to='/songs/upload' className='link'>Upload</NavLink>
           {isLoaded && sessionLinks}
         </div>
       </li>
