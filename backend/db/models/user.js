@@ -49,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function (models) {
     // associations can be defined here
+    User.hasMany(models.Song, { foreignKey: 'id' });
   };
 
   User.prototype.toSafeObject = function () { // remember, this cannot be an arrow function
@@ -65,6 +66,7 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   User.login = async function ({ credential, password }) {
+    console.log('================HERE==================', credential, password);
     const { Op } = require('sequelize');
     const user = await User.scope('loginUser').findOne({
       where: {

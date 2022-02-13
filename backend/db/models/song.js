@@ -1,5 +1,16 @@
 'use strict';
-const { Model, Validator } = require('sequelize');
+
+
+require('dotenv').config();
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  CLOUDINARY_URL: process.env.CLOUDINARY_URL
+})
+
+console.log('DETAILS', process.env.cloud_name)
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   const Song = sequelize.define('Song', {
     name: {
@@ -9,36 +20,51 @@ module.exports = (sequelize, DataTypes) => {
         len: [1, 60]
       }
     },
-    file: {
-      type: DataTypes.BLOB,
+    url: {
+      type: DataTypes.STRING,
       allowNull: false
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: Model.Users }
     }
   });
 
   Song.associate = function (models) {
-
+    Song.hasOne(models.User, { foreignKey: 'id'})
   };
 
-  Song.upload = async function ({ name, file }) {
-    const song = await Song.create({
-      name, 
-      file
-    });
+  // Song.upload = async function ({ name, url }) {
 
-    return song;
-  }
+  //   console.log(url);
 
-  Song.find = async function () {
-    console.log('GETTING SONG');
-    let song = null;
-    try {
-      song = await Song.findByPk(1);
-    } catch(e) {
-      console.log('COULD NOT FIND IN DATABASE');
-    }
+  //   try {
+  //     const song = await Song.create({
+  //       name, 
+  //       url
+  //     });
 
-    return await Song.findByPk(1);
-  }
+  //     console.log('SUCCESS', song)
+  //     return song;
+  //   } catch(e) {
+  //     console.log(e);
+  //   }
+
+  //   return 'fail';
+  // }
+
+  // Song.find = async function () {
+  //   console.log('GETTING SONG');
+  //   let song = null;
+  //   try {
+  //     return await Song.findByPk(1);
+  //   } catch(e) {
+  //     return 'COULD NOT FIND IN DATABASE';
+  //   }
+
+    
+  // }
 
   return Song;
 };

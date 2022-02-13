@@ -11,17 +11,24 @@ const validateSignup = [
     check('name').exists({ checkFalsy: true }).withMessage(
         'Please provide a song name.'
     ),
-    check('file').exists({ checkFalsy: true }).isLength({ min: 4 }).withMessage(
-        'Please provide a file.'
+    check('url').exists({ checkFalsy: true }).isLength({ min: 4 }).withMessage(
+        'Please provide a url.'
     ),
     handleValidationErrors
 ];
 
-router.post('/', validateSignup, asyncHandler(async (req, res) => {
-    const { name, file } = req.body;
-    const song = await Song.upload({
-        name,
-        file
+router.post('/', asyncHandler(async (req, res) => {
+    const { name, url, userId } = req.body;
+
+    console.log('=============SONG INFO=================', userId);
+    // const song = await Song.upload({
+    //     name,
+    //     file,
+    // });
+    const song = await Song.create({
+        name, 
+        url,
+        userId
     });
 
     return song;
@@ -32,7 +39,25 @@ router.all((req, res, next) => {
     next();
 });
 
-router.get('/:id', asyncHandler( async(req, res) => {
+router.get('/user/:id', asyncHandler(async(req, res) => {
+    let userId = req.params.id;
+
+    console.log('===========db user id==============', userId);
+
+    let songs = await Song.findAll({
+        where: {
+            userId
+        }
+    });
+
+    console.log('SONGS FOUND', songs);
+
+    return res.json({
+        songs
+    });
+}));
+
+router.get('/:id', asyncHandler(async(req, res) => {
     console.log('REQ PARAMS ID: ', req.params.id);
     let song = null;
     try {

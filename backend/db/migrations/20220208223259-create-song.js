@@ -11,8 +11,12 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      file: {
-        type: Sequelize.BLOB
+      url: {
+        type: Sequelize.STRING
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
