@@ -60,7 +60,7 @@ function SongInfoPage() {
 
     return (
         <>
-            <input type="range" min='0' max='100' step='5' value='100' id="volume-control" onChange={e => mute(e)}></input>
+            <input type="range" step='5' value='50' id="volume-control" onChange={e => mute(e)}></input>
             <div className='songs'>
                 {songs.map(song => {
                     return (
