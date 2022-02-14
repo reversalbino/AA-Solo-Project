@@ -65,32 +65,33 @@ function UploadSongPage() {
                     <ul>
                         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                     </ul>
-                    <label>
+                    <label className='input'>
                         <i className="fas fa-music"></i>
                         <input
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
+                            placeholder="Song Name"
                         />
                     </label>
-                    <label>
-                        Picture
+                    <label className='input'>
+                        <i className="fas fa-image"></i>
                         <input
                             type="text"
                             value={pictureURL}
                             onChange={(e) => setPictureURL(e.target.value)}
+                            placeholder='Picture URL'
                         />
                     </label>
-                    <label>
-                        File
+                    <label className='input'>
                         <input
                             type="file"
                             onChange={(e) => setFile(e.target.files[0])}
                             required
                         />
                     </label>
-                    <button type="submit">Upload</button>
+                    <button type="submit" id='upload-button'>Upload</button>
                 </form>} 
             {!userIsLoaded && 
                 <h1>Please Log In To Upload Songs</h1>

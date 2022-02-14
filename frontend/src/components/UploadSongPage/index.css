@@ -1,8 +1,37 @@
-/* #submit-song-form {
+#submit-song-form {
     display: flex;
     flex-flow: column nowrap;
     background-color: white;
     border: 2px solid black;
     margin: 200px auto;
+    width: 40%;
+    border-radius: 10px;
+    height: 23rem;
 }
- */
+
+input {
+    background-color: white;
+    border: none;
+}
+
+.input {
+    border: 2px solid black;
+}
+
+#upload-song-text {
+    margin: auto;
+}
+
+#upload-button {
+    width: 70%;
+    margin: auto;
+    background-color: orangered;
+    font-size: 22px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+}
+
+#upload-button:hover {
+    cursor: pointer;
+}

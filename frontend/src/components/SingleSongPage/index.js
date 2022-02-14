@@ -25,7 +25,7 @@ function SingleSongPage(userSong) {
 
     return (
         <div id='individual-song' key={song?.id}>
-            <p className='song-info'>{song.name}<br />BY<br />{song.User.username}</p>
+            <p className='song-info'>{song.name}</p>
             {song.picture_url && <div className='song-image-holder' style={{backgroundImage: `url('${song.picture_url}')`, backgroundSize: 'cover'}}></div>}
             {!song.picture_url && <div className='song-image-holder' style={{ backgroundImage: `url('https://images.prismic.io/milanote/f98c1fa182f20a22c8889b93c6ab72a17ff59d0d_thumbnail.jpg?auto=compress,format')`, backgroundSize: 'cover'}}></div>}
                 {/* <img src={song.picture_url || 'https://images.prismic.io/milanote/f98c1fa182f20a22c8889b93c6ab72a17ff59d0d_thumbnail.jpg?auto=compress,format'} className='song-image' alt='album-logo' /> */}
