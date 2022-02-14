@@ -29,7 +29,7 @@ function App() {
           <Route path="/songs/upload">
             <UploadSongPage />
           </Route>
-          <Route path="/songs/:id">
+          <Route path="/songs">
             <SongInfoPage />
           </Route>
         </Switch>

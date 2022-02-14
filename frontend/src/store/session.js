@@ -58,6 +58,7 @@ export const logout = () => async(dispatch) => {
 
 export const login = (user) => async (dispatch) => {
     const { credential, password } = user;
+
     const response = await csrfFetch('/api/session', {
         method: 'POST',
         body: JSON.stringify({
@@ -71,41 +72,68 @@ export const login = (user) => async (dispatch) => {
 };
 
 export const uploadSong = (song) => async () => {
-    const { name, file } = song;
-    console.log(file)
+    const { name, url, public_id, userId } = song;
+    console.log('========INFO========', name, url, userId)
     const response = await csrfFetch('/api/songs', {
         method: 'POST',
         body: JSON.stringify({
             name,
-            file
+            url,
+            public_id,
+            userId
         })
     });
 
     const data = await response.json();
-    return data;
+    return data.created;
 }
 
 export const getSong = (id) => async (dispatch) => {
     console.log('SONG ID: ', id);
-    let response = null;
-    try {
-        await fetch(`/api/songs/${+id}`)
-        .then(temp => temp.json()).then(please => {
-            response = please
-        });
-        console.log("============RIGHT AFTER RESPONSE==============")
-    } catch(e) {
-        console.log('COULD NOT EVEN START LOOKING');
-    }
+    let response = await csrfFetch(`/api/songs/${+id}`)
+    .then(temp => temp.json()).then(please => {
+        response = please
+    });
 
-    console.log('=============GOT THE SONG==============', response.song.name);
     
 
     const data = response.song;
-    console.log('=============SONG DATA============', data)
     setSong(data)
     window.localStorage.setItem('file', data.file.data);
     return data;
+}
+
+export const getAllUserSongs = (userId) => async() => {
+    // const userIsLoaded = useSelector((state) => state.session.user);
+    // const userId = userIsLoaded?.id;
+
+    console.log('===============GET ALL SONGS USER ID==============', userId)
+
+    let response = await csrfFetch(`/api/songs/user/${+userId}`);
+
+    console.log('RESPONSE', response)
+
+    let data = await response.json();
+    console.log('DATA TO SEND', data);
+
+    return data;
+}
+
+export const deleteSong = (songId) => async() => {
+    let response = await csrfFetch(`/api/songs/delete/${+songId}`, {
+        method: 'DELETE'
+    });
+
+    console.log('RESPONSE', response);
+
+    let data = await response.json();
+    console.log('DATA TO SEND AFTER DELETE', data);
+
+    if(data.deleted) {
+
+    }
+
+
 }
 
 const initialState = { user: null };

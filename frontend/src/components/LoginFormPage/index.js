@@ -42,7 +42,7 @@ function LoginFormPage() {
                         value={credential}
                         onChange={(e) => setCredential(e.target.value)}
                         placeholder='Username or Email'
-                        required
+                        
                     />
                 </label>
                 <label className='input'>
@@ -52,7 +52,7 @@ function LoginFormPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder='Password'
-                        required
+                        
                     />
                 </label>
                 <div className='signup-login-buttons'>

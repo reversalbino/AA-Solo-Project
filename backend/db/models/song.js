@@ -1,14 +1,5 @@
 'use strict';
 
-
-require('dotenv').config();
-const cloudinary = require('cloudinary').v2;
-
-cloudinary.config({
-  CLOUDINARY_URL: process.env.CLOUDINARY_URL
-})
-
-console.log('DETAILS', process.env.cloud_name)
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -21,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     url: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    public_id: {
       type: DataTypes.STRING,
       allowNull: false
     },

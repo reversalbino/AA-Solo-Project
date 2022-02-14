@@ -1,98 +1,105 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as sessionActions from '../../store/session';
 
+import './index.css';
+
 function SongInfoPage() {
-    // const dispatch = useDispatch();
-    // const [song, setSong] = useState(undefined);
+    const dispatch = useDispatch();
+    const [songs, setSongs] = useState([]);
 
-    
+    const userIsLoaded = useSelector((state) => state.session.user);
+    const userId = userIsLoaded?.id;
 
-    // async function test() {
-    //     const id = 1;
-    //     await dispatch(sessionActions.getSong(id)).then(result => {
-    //         console.log('RESULT: ', result.file.data);
-    //         setSong(result.file.data);
+    // async function getAllSongs() {
+    //     await dispatch(sessionActions.getAllUserSongs(userId)).then(result => {
+    //         setSongs(result.songs)
     //     });
-    //     setSong(window.localStorage.getItem('data'))
-    //     console.log('IN SONG DETAIL PAGE', song);
     // }
 
-    // useEffect(() => {
-    //     test();
-    // }, []);
+    useEffect(() => {
+        //getAllSongs();
 
-    // const blob = new Blob([67, 58, 92, 102, 97, 107, 101, 112, 97, 116, 104, 92, 76, 105, 116, 116, 108, 101, 32, 71, 114, 97, 115, 115, 32, 83, 104, 97, 99, 107, 45, 32, 69, 100, 105, 116, 46, 109, 112, 51], { type: "audio/mp3" });
-    // const url = window.URL.createObjectURL(blob);
+        (async () => {
+            await dispatch(sessionActions.getAllUserSongs(userId)).then(result => {
+                setSongs(result.songs)
+            });
+        }) ();
 
-    // console.log('BLOB: ', blob)
-    // console.log('URL: ', url);
+        window.addEventListener('DOMContentLoaded', loadedEvent => {
+            console.log('loaded');
+            let allSongs = document.querySelectorAll('audio');
 
-    //const song = getSongFunction();
+            for (let song in allSongs) {
+                console.log(song);
+                song.addEventListener('ended', e => {
+                    console.log(e.target.id)
+                });
+            }
+        });
+    }, [dispatch, userId]);
 
-    // console.log(typeof getSongFunction, getSongFunction)
-
-    // console.log(Object.keys(getSongFunction));
-
-    // dispatch(sessionActions.getSong(1)).then(result => {
-    //     console.log('RESULT: ', result.file.data);
-    //     //setSong(result.file.data);
-    // });
-
-    // const song = 
-
-    
-    // let song = [67, 58, 92, 102, 97, 107, 101, 112, 97, 116, 104, 92, 76, 105, 116, 116, 108, 101, 32, 71, 114, 97, 115, 115, 32, 83, 104, 97, 99, 107, 45, 32, 69, 100, 105, 116, 46, 109, 112, 51];
-    // console.log('SONG', song);
-
-
-
-
-
-
-
-    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-    // Create an empty three-second stereo buffer at the sample rate of the AudioContext
-    var myArrayBuffer = audioCtx.createBuffer(2, audioCtx.sampleRate * 3, audioCtx.sampleRate);
-
-    // Fill the buffer with white noise;
-    // just random values between -1.0 and 1.0
-    for (var channel = 0; channel < myArrayBuffer.numberOfChannels; channel++) {
-        // This gives us the actual array that contains the data
-        var nowBuffering = myArrayBuffer.getChannelData(channel);
-        for (var i = 0; i < myArrayBuffer.length; i++) {
-            // Math.random() is in [0; 1.0]
-            // audio needs to be in [-1.0; 1.0]
-            nowBuffering[i] = Math.random() * 2 - 1;
-        }
+    function play(e) {
+        let play = e.target.innerText === '▶';
+        let song = document.getElementById(`song-${e.target.id}`);
+        e.target.innerText = play ? '❚❚' : '▶';
+        //e.target.play();
+        play ? song.play() : song.pause();
     }
 
-    // Get an AudioBufferSourceNode.
-    // This is the AudioNode to use when we want to play an AudioBuffer
-    var source = audioCtx.createBufferSource();
+    function mute(e) {
+        // let audio = e.target.parentNode.children[1];
+        let audio = document.querySelector('audio');
+        audio.volume = e.target.value / 100;
+        // let volume = document.querySelector("#volume-control");
+        // console.log(volume);
 
-    // set the buffer in the AudioBufferSourceNode
-    source.buffer = myArrayBuffer;
+        // volume.addEventListener("change", function (e) {
+        //     audio.volume = e.currentTarget.value / 100;
+        // })
+    }
 
-    // connect the AudioBufferSourceNode to the
-    // destination so we can hear the sound
-    source.connect(audioCtx.destination);
+    async function deleteSong(e) {
+        let songId = e.target.id;
 
-    // start the source playing
-    source.start();
+        await dispatch(sessionActions.deleteSong(songId)).then(result => {
+            console.log('RESULT: ', result);
+        });
+    }
 
-
-
-
-
+   
 
     return (
         <>
-            <audio controls autoPlay>
-                <source src='1' type='/audio/mp3' />
-            </audio>
+            <input type="range" id="volume-control" onChange={e => mute(e)}></input>
+            {songs.map(song => {
+                return (
+                    <div className='individual-song' key={song?.id}>
+                        <p>{song.name}</p>
+                        {/* <ReactAudioPlayer
+                            className='audioplayer'
+                            src={song?.url}
+                            controls
+                            
+                            volume={0.5}
+                        /> */}
+                        <audio id={`song-${song.id}`} preload='auto'>
+                            <source src={song.url}/>
+                            No audio
+                        </audio> 
+                        <button className='play-button' id={song.id} onClick={e => play(e)}>&#9654;</button>
+                        {/* <button className='play-button' id={song.id} onClick={e => mute(e)}></button> */}
+                        <button className='play-button' id={song.id} onClick={e => deleteSong(e)}>Delete</button>
+                        {/* <button className='play-button' id={song.id} onClick={e => skip(e)}>Skip</button>
+                        <div className="hp_slide">
+                            <div className="hp_range"></div>
+                        </div> */}
+
+                    </div>
+                )
+            })}
+                
         </>
     );
 }

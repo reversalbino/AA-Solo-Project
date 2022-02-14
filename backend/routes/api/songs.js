@@ -1,11 +1,20 @@
-const express = require('express');
+
+require('dotenv').config();
+const cloudinary = require('cloudinary').v2;const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check } = require('express-validator');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { Song } = require('../../db/models');
+const song = require('../../db/models/song');
 
 const router = express.Router();
+
+
+
+cloudinary.config({
+    CLOUDINARY_URL: process.env.CLOUDINARY_URL
+})
 
 const validateSignup = [
     check('name').exists({ checkFalsy: true }).withMessage(
@@ -18,20 +27,28 @@ const validateSignup = [
 ];
 
 router.post('/', asyncHandler(async (req, res) => {
-    const { name, url, userId } = req.body;
+    const { name, url, public_id, userId } = req.body;
 
     console.log('=============SONG INFO=================', userId);
     // const song = await Song.upload({
     //     name,
     //     file,
     // });
-    const song = await Song.create({
-        name, 
-        url,
-        userId
-    });
-
-    return song;
+    try {
+        const song = await Song.create({
+            name, 
+            url,
+            public_id,
+            userId
+        });
+        return res.json({
+            created: true
+        })
+    } catch(e) {
+        return res.json({
+            created: false
+        })
+    }
 }));
 
 router.all((req, res, next) => {
@@ -50,7 +67,7 @@ router.get('/user/:id', asyncHandler(async(req, res) => {
         }
     });
 
-    console.log('SONGS FOUND', songs);
+    //console.log('SONGS FOUND', songs);
 
     return res.json({
         songs
@@ -76,6 +93,33 @@ router.get('/:id', asyncHandler(async(req, res) => {
 
     return res.json({
         song
+    });
+}));
+
+router.delete('/delete/:id', asyncHandler(async(req, res) => {
+    const id = req.params.id;
+
+    let songToDelete = await Song.findByPk(id);
+    let songPublicId = songToDelete.public_id;
+
+    console.log('PUBLIC_ID', songPublicId);
+
+    console.log('found the song and going to delete it');
+
+    await cloudinary.uploader.destroy(songPublicId, { resource_type: 'video' }, function(error, result) {
+        console.log(error, result);
+
+        if(error === undefined) {
+            return res.json({
+                'deleted': true
+            })
+        }
+    });
+
+    await songToDelete.destroy();
+
+    return res.json ({
+        'deleted': false
     });
 }));
 
