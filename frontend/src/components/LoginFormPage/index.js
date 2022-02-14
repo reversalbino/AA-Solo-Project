@@ -29,7 +29,7 @@ function LoginFormPage() {
 
     const  demoUser = (e) => {
         e.preventDefault();
-        return dispatch(sessionActions.demoLogin());
+        return dispatch(sessionActions.demoLogin())
     }
 
     return (
