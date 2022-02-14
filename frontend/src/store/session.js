@@ -71,20 +71,20 @@ export const login = (user) => async (dispatch) => {
     return response;
 };
 
-// export const demoLogin = () => async (dispatch) => {
-//     const response = await csrfFetch('/api/session', {
-//         method: 'POST', 
-//         body: JSON.stringify({
-//             credential: 'demo',
-//             password: 'demo12'
-//         })
-//     });
+export const demoLogin = () => async (dispatch) => {
+    const response = await csrfFetch('/api/session', {
+        method: 'POST', 
+        body: JSON.stringify({
+            credential: 'demo',
+            password: 'demo12'
+        })
+    });
 
-//     const data = await response.json();
-//     dispatch(setUser(data.user));
+    const data = await response.json();
+    dispatch(setUser(data.user));
 
-//     return response;
-// }
+    return response;
+}
 
 export const uploadSong = (song) => async () => {
     const { name, url, public_id, picture_url, userId } = song;
