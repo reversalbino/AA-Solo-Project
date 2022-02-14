@@ -13,7 +13,7 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <ProfileButton user={sessionUser} />
+      <ProfileButton id='user-logo' user={sessionUser} />
     );
   } else {
     sessionLinks = (
@@ -29,7 +29,7 @@ function Navigation({ isLoaded }) {
       <li className='nav'>
         <NavLink exact to="/" id='title'>Noise-Storm</NavLink>
         <div className='links'>
-          <NavLink exact to="/songs" id='title'>My Songs</NavLink>
+          <NavLink exact to="/songs" className='link'>My Songs</NavLink>
           <NavLink to='/songs/upload' className='link'>Upload</NavLink>
           {isLoaded && sessionLinks}
         </div>

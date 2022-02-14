@@ -34,6 +34,14 @@ function App() {
           </Route>
         </Switch>
       )}
+      <hr/>
+      <div id='homepage'>
+        <div id='top-and-bottom'>
+          <div id='top'>
+            
+          </div>
+        </div>
+      </div>
     </>
   );
 }

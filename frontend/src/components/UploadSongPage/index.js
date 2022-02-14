@@ -10,6 +10,7 @@ function UploadSongPage() {
     const dispatch = useDispatch();
     // const sessionUser = useSelector((state) => state.session.user);
     const [name, setName] = useState("");
+    const [pictureURL, setPictureURL] = useState('');
     const [file, setFile] = useState(undefined);
     const [errors, setErrors] = useState([]);
 
@@ -40,6 +41,7 @@ function UploadSongPage() {
                 name,
                 url: data.secure_url,
                 public_id: data.public_id,
+                picture_url: pictureURL,
                 userId
             }
 
@@ -74,6 +76,14 @@ function UploadSongPage() {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
+                        />
+                    </label>
+                    <label>
+                        Picture
+                        <input
+                            type="text"
+                            value={pictureURL}
+                            onChange={(e) => setPictureURL(e.target.value)}
                         />
                     </label>
                     <label>

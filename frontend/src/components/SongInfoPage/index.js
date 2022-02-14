@@ -23,21 +23,9 @@ function SongInfoPage() {
 
         (async () => {
             await dispatch(sessionActions.getAllUserSongs(userId)).then(result => {
-                setSongs(result.songs)
+                setSongs(result.songs);   
             });
         }) ();
-
-        window.addEventListener('DOMContentLoaded', loadedEvent => {
-            console.log('loaded');
-            let allSongs = document.querySelectorAll('audio');
-
-            for (let song in allSongs) {
-                console.log(song);
-                song.addEventListener('ended', e => {
-                    console.log(e.target.id)
-                });
-            }
-        });
     }, [dispatch, userId]);
 
     function play(e) {
@@ -72,34 +60,37 @@ function SongInfoPage() {
 
     return (
         <>
-            <input type="range" id="volume-control" onChange={e => mute(e)}></input>
-            {songs.map(song => {
-                return (
-                    <div className='individual-song' key={song?.id}>
-                        <p>{song.name}</p>
-                        {/* <ReactAudioPlayer
-                            className='audioplayer'
-                            src={song?.url}
-                            controls
-                            
-                            volume={0.5}
-                        /> */}
-                        <audio id={`song-${song.id}`} preload='auto'>
-                            <source src={song.url}/>
-                            No audio
-                        </audio> 
-                        <button className='play-button' id={song.id} onClick={e => play(e)}>&#9654;</button>
-                        {/* <button className='play-button' id={song.id} onClick={e => mute(e)}></button> */}
-                        <button className='play-button' id={song.id} onClick={e => deleteSong(e)}>Delete</button>
-                        {/* <button className='play-button' id={song.id} onClick={e => skip(e)}>Skip</button>
-                        <div className="hp_slide">
-                            <div className="hp_range"></div>
-                        </div> */}
+            <input type="range" min='0' max='100' step='5' value='100' id="volume-control" onChange={e => mute(e)}></input>
+            <div className='songs'>
+                {songs.map(song => {
+                    return (
+                        <div className='individual-song' key={song?.id}>
+                            <p className='song-info'>{song.name}<br />BY<br />{song.User.username}</p>
 
-                    </div>
+                            {/* <ReactAudioPlayer
+                                className='audioplayer'
+                                src={song?.url}
+                                controls
+                                
+                                volume={0.5}
+                            /> */}
+                            <img src={song.picture_url || 'https://images.prismic.io/milanote/f98c1fa182f20a22c8889b93c6ab72a17ff59d0d_thumbnail.jpg?auto=compress,format'} alt='album-logo' className='song-image'/>
+                            <audio id={`song-${song.id}`} preload='auto'>
+                                <source src={song.url}/>
+                                No audio
+                            </audio> 
+                            <button className='play-button' id={song.id} onClick={e => play(e)}>&#9654;</button>
+                            {/* <button className='play-button' id={song.id} onClick={e => mute(e)}></button> */}
+                            <button className='delete-button' id={song.id} onClick={e => deleteSong(e)}>Delete</button>
+                            {/* <button className='play-button' id={song.id} onClick={e => skip(e)}>Skip</button>
+                            <div className="hp_slide">
+                                <div className="hp_range"></div>
+                            </div> */}
+
+                        </div>
                 )
             })}
-                
+            </div>
         </>
     );
 }

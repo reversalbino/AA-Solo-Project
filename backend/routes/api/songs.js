@@ -27,7 +27,7 @@ const validateSignup = [
 ];
 
 router.post('/', asyncHandler(async (req, res) => {
-    const { name, url, public_id, userId } = req.body;
+    const { name, url, public_id, picture_url, userId } = req.body;
 
     console.log('=============SONG INFO=================', userId);
     // const song = await Song.upload({
@@ -39,6 +39,7 @@ router.post('/', asyncHandler(async (req, res) => {
             name, 
             url,
             public_id,
+            picture_url,
             userId
         });
         return res.json({
@@ -64,7 +65,8 @@ router.get('/user/:id', asyncHandler(async(req, res) => {
     let songs = await Song.findAll({
         where: {
             userId
-        }
+        },
+        include: 'User'
     });
 
     //console.log('SONGS FOUND', songs);

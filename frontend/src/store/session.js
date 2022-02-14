@@ -72,7 +72,7 @@ export const login = (user) => async (dispatch) => {
 };
 
 export const uploadSong = (song) => async () => {
-    const { name, url, public_id, userId } = song;
+    const { name, url, public_id, picture_url, userId } = song;
     console.log('========INFO========', name, url, userId)
     const response = await csrfFetch('/api/songs', {
         method: 'POST',
@@ -80,6 +80,7 @@ export const uploadSong = (song) => async () => {
             name,
             url,
             public_id,
+            picture_url,
             userId
         })
     });

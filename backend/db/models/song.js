@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    picture_url: {
+      type: DataTypes.STRING,
+      default: 'https://www.pngitem.com/pimgs/m/646-6463491_music-note-png-icon-song-note-transparent-png.png',
+      allowNull: true
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
