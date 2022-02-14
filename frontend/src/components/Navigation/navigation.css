@@ -24,6 +24,7 @@ ul {
     margin: auto;
     padding: 20px;
     font-size: 25px;
+    text-align: center;
 }
 
 .link:hover {
@@ -47,4 +48,9 @@ ul {
 
 #user-button {
     border: none;
+}
+
+hr, ul {
+    width: 1200px;
+    margin: auto;
 }

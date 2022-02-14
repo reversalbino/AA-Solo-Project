@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
- import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import * as sessionActions from '../../store/session'
 
@@ -18,12 +18,9 @@ function UploadSongPage() {
 
     const userIsLoaded = useSelector((state) => state.session.user);
     const userId = userIsLoaded?.id;
-    console.log(userId);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        console.log(file);
 
         const formData = new FormData();
         formData.append('file', file);
@@ -35,8 +32,6 @@ function UploadSongPage() {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
-
             const newSong = {
                 name,
                 url: data.secure_url,
@@ -65,12 +60,13 @@ function UploadSongPage() {
     return (
         <>
             {userIsLoaded &&  
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} id='submit-song-form'>
+                    <h1 id='upload-song-text'>Upload Song</h1>
                     <ul>
                         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                     </ul>
                     <label>
-                        Name
+                        <i className="fas fa-music"></i>
                         <input
                             type="text"
                             value={name}
@@ -96,7 +92,9 @@ function UploadSongPage() {
                     </label>
                     <button type="submit">Upload</button>
                 </form>} 
-            {!userIsLoaded && <p>PLEASE LOG IN TO PERFORM THIS ACTION</p>}
+            {!userIsLoaded && 
+                <h1>Please Log In To Upload Songs</h1>
+            }
         </>
     );
 }

@@ -34,7 +34,7 @@ body {
   justify-content: center;
 }
 
-.individual-song {
+#individual-song {
   padding: 20px;
   width: 20%;
   height: 100px;
@@ -60,4 +60,14 @@ button:hover {
   width: 80%;
   overflow: hidden;
   padding: 9px;
+}
+
+.song-info {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+}
+
+#volume-slider {
+  margin-left: 44%;
 }

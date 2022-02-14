@@ -21,20 +21,24 @@ function LoginFormPage() {
         setErrors([]);
         return dispatch(sessionActions.login({ credential, password })).catch(async (res) => {
             const data = await res.json();
-            console.log('ERRORS', errors);
-            console.log('DATA.ERRORS: ', data.errors);
             if (data && data.errors) setErrors(data.errors);
         });
 
         
     }
 
+    const  demoUser = (e) => {
+        e.preventDefault();
+        return dispatch(sessionActions.demoLogin());
+    }
+
     return (
         <div className='login-form'>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} id='login-form'>
                 <ul>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
+                <p id='login-text'>Log In</p>
                 <label className='input'>
                     <i className="fas fa-user" id='user-logo'></i>
                     <input
@@ -55,8 +59,10 @@ function LoginFormPage() {
                         
                     />
                 </label>
+                
                 <div className='signup-login-buttons'>
-                    <a href='/signup' className='button signup-login-button' id='register'>Register now </a>
+                    <button id='use-demo-user-button' onClick={demoUser}><p id='use-demo-user'>Demo User</p></button>
+                    <button id='register-button-login-page'><a href='/signup' className='button signup-login-button' id='register'>Register now </a></button>
                     <button type="submit" className='button signup-login-button' id='login-button'>Log In</button>
                 </div>
             </form>

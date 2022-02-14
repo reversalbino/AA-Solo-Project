@@ -13,7 +13,11 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <ProfileButton id='user-logo' user={sessionUser} />
+      <>
+        <NavLink exact to="/songs" className='link'>My Songs</NavLink>
+        <NavLink to='/songs/upload' className='link'>Upload</NavLink>
+        <ProfileButton id='user-logo' user={sessionUser} />
+      </>
     );
   } else {
     sessionLinks = (
@@ -25,16 +29,17 @@ function Navigation({ isLoaded }) {
   }
 
   return (
-    <ul>
-      <li className='nav'>
-        <NavLink exact to="/" id='title'>Noise-Storm</NavLink>
-        <div className='links'>
-          <NavLink exact to="/songs" className='link'>My Songs</NavLink>
-          <NavLink to='/songs/upload' className='link'>Upload</NavLink>
-          {isLoaded && sessionLinks}
-        </div>
-      </li>
-    </ul>
+    <>
+      <ul>
+        <li className='nav'>
+          <NavLink exact to="/" id='title'>Noise-Storm</NavLink>
+          <div className='links'>
+            {isLoaded && sessionLinks}
+          </div>
+        </li>
+      </ul>
+      <hr/>
+    </>
   );
 }
 

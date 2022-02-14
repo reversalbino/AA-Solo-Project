@@ -31,48 +31,67 @@ function SignupFormPage() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <ul>
-                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
-            <label>
-                Email
-                <input
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Username
-                <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Password
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Confirm Password
-                <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                />
-            </label>
-            <button type="submit">Sign Up</button>
-        </form>
+        <div className='signup-form'>
+            <form onSubmit={handleSubmit} id='signup-form'>
+                <p id='signup-text'>Sign Up</p>
+                <ul>
+                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
+                <label className="input">
+                    <i className="fas fa-envelope logo"></i>
+                    <input
+                        type="text"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder='E-Mail'
+                        required
+                    />
+                </label>
+                {/* <label>
+                    Username
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </label> */}
+                <label className='input'>
+                    <i className="fas fa-user logo"></i>
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder='Username'
+
+                    />
+                </label>
+                <label className="input">
+                    <i className="fas fa-key logo"></i>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder='Password'
+                        required
+                    />
+                </label>
+                <label className="input">
+                    <i className="fas fa-key logo"></i>
+                    <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder='Confirm Password'
+                        required
+                    />
+                </label>
+                <div className='signup-login-buttons'>
+                    <button id='login-button-signup-page'><a href='/login' className='button signup-login-button' id='register'>Have an account? Log In </a></button>
+                    <button type="submit" className='button signup-login-button' id='register-button-signup-page'>Signup</button>
+                </div>
+            </form>
+        </div>
     );
 }
 
