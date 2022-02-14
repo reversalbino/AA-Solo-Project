@@ -61,4 +61,24 @@ router.get('/', restoreUser, (req, res) => {
     }
 });
 
+// router.get('/demo', (req, res) => {
+//     const user = User.findOne({
+//         where: {
+//             username: 'demo'
+//         }
+//     });
+
+//     if(user) {
+//         setTokenCookie(res, user);
+//         return res.json({
+//             user: user.toSafeObject()
+//         });
+//     }
+//     else {
+//         return res.json({
+//             status: 'failed'
+//         });
+//     }
+// });
+
 module.exports = router;

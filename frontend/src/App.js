@@ -11,7 +11,10 @@ import SongInfoPage from './components/SongInfoPage'
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
+    dispatch(sessionActions.getAllSongs()).then(() => setIsLoaded(true));
+
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
@@ -20,6 +23,22 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact path='/'>
+            <div>
+              <video id="background-video" autoPlay loop muted>
+                <source src='https://res.cloudinary.com/reversealbino/video/upload/v1644841749/video/upload/background_video_hiz3fa.mp4' type="video/mp4" />
+              </video>
+              <div id='homepage-text'>
+                <h2>"Fortune favors the bold" -Aristotle</h2>
+                <h1>BE BOLD.</h1>
+              </div>
+              <hr id='separator'/>
+              <div id='intro'>
+                <h3>Your shower has heard you sing enough. It's the world's turn</h3>
+                <button id='get-started'><a href='/signup'>Get Started</a></button>
+              </div>
+            </div>
+          </Route>
           <Route path="/login">
             <LoginFormPage />
           </Route>
@@ -34,7 +53,6 @@ function App() {
           </Route>
         </Switch>
       )}
-      <hr/>
       <div id='homepage'>
         <div id='top-and-bottom'>
           <div id='top'>

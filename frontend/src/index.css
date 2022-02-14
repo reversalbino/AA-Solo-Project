@@ -1,4 +1,54 @@
 /* TODO Add site wide styles */
-hr {
-    width: 1000px;
+#background-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+#homepage-text {
+    text-align: center;
+    margin-top: 10%;
+}
+
+#separator {
+  margin-top: 100px;
+}
+
+#homepage-text h2, #homepage-text h1 {
+  color: white;
+}
+
+#intro {
+  width: 20%;
+  margin: auto;
+  text-align: center;
+}
+
+#intro h3 {
+  color: white;
+  font-size: 25px;
+}
+
+#get-started {
+  background-color: orangered;
+  height: 50px;
+  font-size: 30px;
+  border: none;
+  border-radius: 20px;
+}
+
+#get-started a {
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+}
+
+#get-started:hover {
+  cursor: pointer;
 }

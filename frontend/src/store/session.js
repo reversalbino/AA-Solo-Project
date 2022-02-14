@@ -71,9 +71,23 @@ export const login = (user) => async (dispatch) => {
     return response;
 };
 
+// export const demoLogin = () => async (dispatch) => {
+//     const response = await csrfFetch('/api/session', {
+//         method: 'POST', 
+//         body: JSON.stringify({
+//             credential: 'demo',
+//             password: 'demo12'
+//         })
+//     });
+
+//     const data = await response.json();
+//     dispatch(setUser(data.user));
+
+//     return response;
+// }
+
 export const uploadSong = (song) => async () => {
     const { name, url, public_id, picture_url, userId } = song;
-    console.log('========INFO========', name, url, userId)
     const response = await csrfFetch('/api/songs', {
         method: 'POST',
         body: JSON.stringify({
@@ -90,7 +104,6 @@ export const uploadSong = (song) => async () => {
 }
 
 export const getSong = (id) => async (dispatch) => {
-    console.log('SONG ID: ', id);
     let response = await csrfFetch(`/api/songs/${+id}`)
     .then(temp => temp.json()).then(please => {
         response = please
@@ -105,19 +118,14 @@ export const getSong = (id) => async (dispatch) => {
 }
 
 export const getAllUserSongs = (userId) => async() => {
-    // const userIsLoaded = useSelector((state) => state.session.user);
-    // const userId = userIsLoaded?.id;
-
-    console.log('===============GET ALL SONGS USER ID==============', userId)
-
     let response = await csrfFetch(`/api/songs/user/${+userId}`);
-
-    console.log('RESPONSE', response)
-
     let data = await response.json();
-    console.log('DATA TO SEND', data);
 
     return data;
+}
+
+export const getAllSongs = () => async() => {
+    
 }
 
 export const deleteSong = (songId) => async() => {
@@ -125,16 +133,9 @@ export const deleteSong = (songId) => async() => {
         method: 'DELETE'
     });
 
-    console.log('RESPONSE', response);
-
     let data = await response.json();
-    console.log('DATA TO SEND AFTER DELETE', data);
 
-    if(data.deleted) {
-
-    }
-
-
+    return data;
 }
 
 const initialState = { user: null };
