@@ -29,7 +29,11 @@ function LoginFormPage() {
 
     const  demoUser = (e) => {
         e.preventDefault();
-        return dispatch(sessionActions.demoLogin());
+        return dispatch(sessionActions.login({ credential: 'demo', password: 'demo12'}))
+        .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+        });
     }
 
     return (
